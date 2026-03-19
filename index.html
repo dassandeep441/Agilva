@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<title>Agilva Solutions</title>
+<title>Agilva Solutions — Strategy &amp; Technology Consulting</title>
 <link rel="icon" type="image/svg+xml" href="favicon.svg"/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Sans:wght@300;400&display=swap" rel="stylesheet"/>
@@ -358,6 +358,40 @@ nav{
   body{cursor:auto;}#cursor,#cursor-ring{display:none;}
 }
 @media(max-width:600px){.services-tiles,.footer-nav-grid{grid-template-columns:1fr;}.form-row-2{grid-template-columns:1fr;}}
+
+/* ── Contact Popup ── */
+.popup-overlay{position:fixed;inset:0;z-index:1000;background:rgba(4,4,4,.85);backdrop-filter:blur(12px);display:flex;align-items:center;justify-content:center;padding:24px;opacity:0;visibility:hidden;transition:opacity .35s ease,visibility .35s;}
+.popup-overlay.open{opacity:1;visibility:visible;}
+.popup-overlay.open .popup-card{transform:translateY(0);opacity:1;}
+.popup-card{background:var(--bg2);border:0.5px solid var(--accent);border-radius:16px;width:100%;max-width:680px;max-height:90vh;overflow-y:auto;padding:48px 44px 40px;position:relative;transform:translateY(20px);opacity:0;transition:transform .4s ease,opacity .4s ease;scrollbar-width:thin;scrollbar-color:rgba(184,152,96,.3) transparent;}
+.popup-card::-webkit-scrollbar{width:4px;}
+.popup-card::-webkit-scrollbar-thumb{background:rgba(184,152,96,.3);border-radius:4px;}
+.popup-close{position:absolute;top:20px;right:20px;width:32px;height:32px;border-radius:50%;background:var(--bg3);border:0.5px solid var(--line2);color:var(--muted2);font-size:18px;line-height:1;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:border-color .2s,color .2s;font-family:var(--sans);}
+.popup-close:hover{border-color:var(--accent);color:var(--accent);}
+.popup-tag{font-size:10px;letter-spacing:.25em;text-transform:uppercase;color:var(--accent);margin-bottom:14px;display:flex;align-items:center;gap:10px;font-family:var(--sans);font-weight:300;}
+.popup-tag::before{content:'';width:20px;height:0.5px;background:var(--accent);display:block;}
+.popup-title{font-family:var(--serif);font-size:clamp(32px,4vw,48px);font-weight:300;line-height:1.05;letter-spacing:-.01em;margin-bottom:8px;}
+.popup-title em{font-style:italic;color:var(--accent);}
+.popup-desc{font-size:13px;color:var(--muted2);line-height:1.8;font-weight:300;margin-bottom:24px;}
+.popup-detail{display:flex;gap:24px;margin-bottom:24px;flex-wrap:wrap;}
+.popup-detail-item{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--muted2);}
+.popup-detail-item a{color:var(--muted2);text-decoration:none;transition:color .2s;}
+.popup-detail-item a:hover{color:var(--accent);}
+.popup-detail-dot{width:4px;height:4px;border-radius:50%;background:var(--accent);flex-shrink:0;}
+.popup-divider{height:0.5px;background:var(--line);margin:0 0 28px;}
+.p-form-row{margin-bottom:18px;}
+.p-form-label{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-bottom:7px;display:block;font-family:var(--sans);}
+.p-form-input,.p-form-textarea,.p-form-select{width:100%;background:var(--bg3);border:0.5px solid var(--line2);border-radius:8px;padding:11px 15px;color:var(--text);font-family:var(--sans);font-size:13px;font-weight:300;outline:none;transition:border-color .2s;appearance:none;}
+.p-form-input:focus,.p-form-textarea:focus,.p-form-select:focus{border-color:rgba(184,152,96,.5);}
+.p-form-input::placeholder,.p-form-textarea::placeholder{color:var(--muted);}
+.p-form-textarea{resize:vertical;min-height:100px;line-height:1.7;}
+.p-form-row-2{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:18px;}
+.p-captcha-wrap{margin-bottom:22px;}
+.p-form-submit{width:100%;background:var(--accent);color:var(--bg);border:none;border-radius:8px;padding:14px 32px;font-size:11px;letter-spacing:.18em;text-transform:uppercase;font-family:var(--sans);font-weight:400;cursor:pointer;transition:background .25s,transform .2s;}
+.p-form-submit:hover{background:var(--accent2);transform:translateY(-1px);}
+.p-form-note{font-size:11px;color:var(--muted);margin-top:12px;line-height:1.6;text-align:center;}
+@media(max-width:600px){.popup-card{padding:32px 22px 28px;}.p-form-row-2{grid-template-columns:1fr;}}
+
 </style>
 </head>
 <body>
@@ -383,7 +417,7 @@ nav{
       </div>
     </li>
     <li><a href="#blog">Blog</a></li>
-    <li><a href="#contact" class="nav-cta">Get in Touch</a></li>
+    <li><a href="#" onclick="openPopup();return false;" class="nav-cta">Get in Touch</a></li>
   </ul>
 </nav>
 
@@ -396,7 +430,7 @@ nav{
     <p class="hero-desc">Agilva is a boutique consultancy helping ambitious teams move faster, think sharper, and build work that endures.</p>
     <div class="hero-actions">
       <a href="#services" class="btn-primary">Our Services &darr;</a>
-      <a href="#contact" class="btn-ghost">Get in Touch</a>
+      <button onclick="openPopup()" class="btn-ghost">Get in Touch</button>
     </div>
     <div class="hero-footnote">
       <div class="hero-stat">
@@ -805,7 +839,7 @@ nav{
         <li><a href="#about">About us</a></li>
         <li><a href="#work">Our work</a></li>
         <li><a href="#blog-tiles">Blog</a></li>
-        <li><a href="#contact">Contact</a></li>
+        <li><a href="#" onclick="openPopup();return false;">Contact</a></li>
       </ul>
     </div>
     <div class="footer-col">
@@ -862,6 +896,67 @@ nav{
     btn.style.background = '#3a6a3a';
     btn.disabled = true;
   }
+
+  // Popup
+  function openPopup(){
+    document.getElementById('contactPopup').classList.add('open');
+    document.body.style.overflow='hidden';
+  }
+  function closePopup(){
+    document.getElementById('contactPopup').classList.remove('open');
+    document.body.style.overflow='';
+  }
+  function closePopupOnOverlay(e){
+    if(e.target===document.getElementById('contactPopup')) closePopup();
+  }
+  document.addEventListener('keydown',function(e){if(e.key==='Escape') closePopup();});
+  function handlePopupSubmit(e){
+    e.preventDefault();
+    var resp=typeof grecaptcha!=='undefined'?grecaptcha.getResponse():null;
+    if(!resp||resp.length===0){alert('Please complete the reCAPTCHA verification.');return;}
+    var btn=document.querySelector('#hp-popup-form .p-form-submit');
+    btn.textContent='Message Sent ✓';
+    btn.style.background='#3a6a3a';
+    btn.disabled=true;
+    setTimeout(closePopup,2200);
+  }
+
 </script>
+
+<!-- Contact Popup -->
+<div class="popup-overlay" id="contactPopup" onclick="closePopupOnOverlay(event)">
+  <div class="popup-card">
+    <button class="popup-close" onclick="closePopup()">&times;</button>
+    <div class="popup-tag">Get in touch</div>
+    <h2 class="popup-title">Let&rsquo;s<br><em>talk.</em></h2>
+    <p class="popup-desc">Tell us about your project. We&rsquo;ll get back to you within one business day.</p>
+    <div class="popup-detail">
+      <div class="popup-detail-item"><span class="popup-detail-dot"></span><a href="mailto:info@agilva.com">info@agilva.com</a></div>
+      <div class="popup-detail-item"><span class="popup-detail-dot"></span>Cuttack, Odisha, India</div>
+      <div class="popup-detail-item"><span class="popup-detail-dot"></span>Available globally</div>
+    </div>
+    <div class="popup-divider"></div>
+    <form id="hp-popup-form" onsubmit="handlePopupSubmit(event)">
+      <div class="p-form-row-2">
+        <div class="p-form-row" style="margin-bottom:0;"><label class="p-form-label">First name</label><input class="p-form-input" type="text" placeholder="John" required/></div>
+        <div class="p-form-row" style="margin-bottom:0;"><label class="p-form-label">Last name</label><input class="p-form-input" type="text" placeholder="Smith" required/></div>
+      </div>
+      <div class="p-form-row"><label class="p-form-label">Work email</label><input class="p-form-input" type="email" placeholder="john@company.com" required/></div>
+      <div class="p-form-row"><label class="p-form-label">Company</label><input class="p-form-input" type="text" placeholder="Your company name"/></div>
+      <div class="p-form-row">
+        <label class="p-form-label">Service interested in</label>
+        <select class="p-form-select p-form-input">
+          <option value="" disabled selected>Select a service</option>
+          <option>Atlassian</option><option>ServiceNow</option><option>GitHub</option><option>ClickUp</option><option>Asana</option><option>General Consulting</option>
+        </select>
+      </div>
+      <div class="p-form-row"><label class="p-form-label">Message</label><textarea class="p-form-textarea" placeholder="Tell us about your project or challenge..." required></textarea></div>
+      <div class="p-captcha-wrap"><div class="g-recaptcha" data-sitekey="YOUR_SITE_KEY" data-theme="dark"></div></div>
+      <button type="submit" class="p-form-submit">Send Message &rarr;</button>
+      <p class="p-form-note">We respect your privacy. Your information is never shared with third parties.</p>
+    </form>
+  </div>
+</div>
+
 </body>
 </html>
