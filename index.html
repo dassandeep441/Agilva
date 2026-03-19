@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<title>Agilva Solutions</title>
+<title>Agilva Solutions — Strategy &amp; Technology Consulting</title>
 <link rel="icon" type="image/svg+xml" href="favicon.svg"/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Sans:wght@300;400&display=swap" rel="stylesheet"/>
@@ -159,13 +159,13 @@ nav{
 .hero-stat-label{font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-top:4px;}
 .hero-divider{width:0.5px;background:var(--line2);align-self:stretch;}
 .hero-right{position:relative;z-index:1;opacity:0;animation:fadeIn .9s .5s forwards;}
-.hero-image-wrap{position:relative;aspect-ratio:4/5;}
+.hero-image-wrap{position:relative;aspect-ratio:3/2;max-height:420px;}
 .hero-image-frame{
   position:absolute;inset:0;border:0.5px solid var(--line2);
   border-radius:12px;overflow:hidden;
 }
 .hero-image-placeholder{
-  width:75%;height:75%;background:var(--bg3);
+  width:100%;height:100%;background:var(--bg3);
   display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;
 }
 .hero-img-icon{width:56px;height:56px;border:0.5px solid var(--line2);border-radius:8px;display:flex;align-items:center;justify-content:center;}
@@ -247,7 +247,7 @@ nav{
 .stat-cell-num{font-family:var(--serif);font-size:48px;font-weight:300;line-height:1;color:var(--text);}
 .stat-cell-num span{color:var(--accent);font-size:28px;}
 .stat-cell-label{font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);margin-top:6px;}
-.about-visual-box{aspect-ratio:3/4;background:var(--bg3);border:0.5px solid var(--line2);position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;border-radius:14px;}
+.about-visual-box{aspect-ratio:3/2;background:var(--bg3);border:0.5px solid var(--line2);position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;border-radius:14px;max-height:400px;}
 .about-visual-glow{position:absolute;inset:0;background:radial-gradient(circle at 50% 40%,rgba(184,152,96,.07),transparent 65%);}
 .about-visual-inner{width:60%;height:60%;border:0.5px solid rgba(184,152,96,.15);position:relative;display:flex;align-items:center;justify-content:center;border-radius:8px;}
 .about-diamond{width:40px;height:40px;background:var(--accent);opacity:.12;transform:rotate(45deg);}
@@ -278,12 +278,12 @@ nav{
 .blog-read span{display:inline-block;transition:transform .2s;}
 
 /* ── CONTACT ── */
-#contact{padding:100px 56px;border-top:0.5px solid var(--line);background:var(--bg2);}
-.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start;}
+#contact{padding:80px 56px;border-top:0.5px solid var(--line);background:var(--bg2);}
+.contact-grid{display:grid;grid-template-columns:1fr 1.1fr;gap:64px;align-items:center;}
 .contact-left{}
-.contact-title{font-family:var(--serif);font-size:clamp(40px,5vw,68px);font-weight:300;line-height:1.0;letter-spacing:-.01em;margin-top:16px;margin-bottom:28px;}
+.contact-title{font-family:var(--serif);font-size:clamp(52px,6.5vw,88px);font-weight:300;line-height:.95;letter-spacing:-.02em;margin:0;}
 .contact-title em{font-style:italic;color:var(--accent);}
-.contact-desc{font-size:14px;color:var(--muted2);line-height:1.9;font-weight:300;margin-bottom:40px;}
+.contact-desc{font-size:13px;color:var(--muted);line-height:1.8;font-weight:300;margin-top:20px;margin-bottom:0;}
 .contact-detail{display:flex;flex-direction:column;gap:16px;}
 .contact-detail-item{display:flex;align-items:center;gap:12px;font-size:13px;color:var(--muted2);}
 .contact-detail-item a{color:var(--muted2);text-decoration:none;transition:color .2s;}
@@ -291,35 +291,16 @@ nav{
 .contact-detail-dot{width:4px;height:4px;border-radius:50%;background:var(--accent);flex-shrink:0;}
 
 /* Contact form tile */
-.contact-form-tile{
-  background:var(--bg3);
-  border:0.5px solid var(--accent);
-  border-radius:14px;
-  padding:40px 36px;
-}
-.form-row{margin-bottom:20px;}
+.contact-form-tile{background:var(--bg3);border:0.5px solid var(--accent);border-radius:14px;padding:28px 28px;}
+.form-row{margin-bottom:14px;}
 .form-label{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-bottom:8px;display:block;font-family:var(--sans);}
-.form-input,.form-textarea,.form-select{
-  width:100%;background:var(--bg2);
-  border:0.5px solid var(--line2);
-  border-radius:8px;
-  padding:12px 16px;
-  color:var(--text);font-family:var(--sans);font-size:13px;font-weight:300;
-  outline:none;transition:border-color .2s;
-  appearance:none;
-}
+.form-input,.form-textarea,.form-select{width:100%;background:var(--bg2);border:0.5px solid var(--line2);border-radius:8px;padding:9px 13px;color:var(--text);font-family:var(--sans);font-size:12px;font-weight:300;outline:none;transition:border-color .2s;appearance:none;}
 .form-input:focus,.form-textarea:focus,.form-select:focus{border-color:rgba(184,152,96,.5);}
 .form-input::placeholder,.form-textarea::placeholder{color:var(--muted);}
-.form-textarea{resize:vertical;min-height:110px;line-height:1.7;}
-.form-row-2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px;}
-.captcha-wrap{margin-bottom:24px;display:flex;justify-content:flex-start;}
-.form-submit{
-  width:100%;background:var(--accent);color:var(--bg);
-  border:none;border-radius:8px;padding:14px 32px;
-  font-size:11px;letter-spacing:.18em;text-transform:uppercase;
-  font-family:var(--sans);font-weight:400;cursor:pointer;
-  transition:background .25s,transform .2s;
-}
+.form-textarea{resize:vertical;min-height:72px;line-height:1.6;}
+.form-row-2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px;}
+.captcha-wrap{margin-bottom:16px;display:flex;justify-content:flex-start;transform:scale(0.88);transform-origin:left;}
+.form-submit{width:100%;background:var(--accent);color:var(--bg);border:none;border-radius:8px;padding:11px 24px;font-size:11px;letter-spacing:.18em;text-transform:uppercase;font-family:var(--sans);font-weight:400;cursor:pointer;transition:background .25s,transform .2s;}
 .form-submit:hover{background:var(--accent2);transform:translateY(-1px);}
 .form-note{font-size:11px;color:var(--muted);margin-top:14px;line-height:1.6;}
 
@@ -393,6 +374,7 @@ nav{
 @media(max-width:600px){.popup-card{padding:32px 22px 28px;}.p-form-row-2{grid-template-columns:1fr;}}
 
 </style>
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 </head>
 <body>
 
@@ -440,7 +422,7 @@ nav{
       <div class="hero-divider"></div>
       <div class="hero-stat">
         <div class="hero-stat-num">6</div>
-        <div class="hero-stat-label"> Years in Practice </div>
+        <div class="hero-stat-label">Years in Practice</div>
       </div>
       <div class="hero-divider"></div>
       <div class="hero-stat">
@@ -455,62 +437,7 @@ nav{
         <div class="frame-corner tl"></div><div class="frame-corner tr"></div>
         <div class="frame-corner bl"></div><div class="frame-corner br"></div>
         
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 600" width="100%" height="100%" style="display:block;position:absolute;inset:0;border-radius:12px;">
-  <defs>
-    <radialGradient id="h-bg" cx="60%" cy="35%" r="70%"><stop offset="0%" stop-color="#1c1812"/><stop offset="100%" stop-color="#070707"/></radialGradient>
-    <radialGradient id="h-glow1" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#b89860" stop-opacity="0.18"/><stop offset="100%" stop-color="#b89860" stop-opacity="0"/></radialGradient>
-    <radialGradient id="h-glow2" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#4a6fff" stop-opacity="0.06"/><stop offset="100%" stop-color="#4a6fff" stop-opacity="0"/></radialGradient>
-    <linearGradient id="h-scan" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#b89860" stop-opacity="0"/><stop offset="50%" stop-color="#b89860" stop-opacity="0.4"/><stop offset="100%" stop-color="#b89860" stop-opacity="0"/></linearGradient>
-    <linearGradient id="h-vline" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#b89860" stop-opacity="0"/><stop offset="50%" stop-color="#b89860" stop-opacity="0.15"/><stop offset="100%" stop-color="#b89860" stop-opacity="0"/></linearGradient>
-    <linearGradient id="h-fade" x1="0%" y1="60%" x2="0%" y2="100%"><stop offset="0%" stop-color="#070707" stop-opacity="0"/><stop offset="100%" stop-color="#070707" stop-opacity="1"/></linearGradient>
-    <linearGradient id="h-bar" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#b89860" stop-opacity="0"/><stop offset="20%" stop-color="#b89860" stop-opacity="0.6"/><stop offset="80%" stop-color="#b89860" stop-opacity="0.6"/><stop offset="100%" stop-color="#b89860" stop-opacity="0"/></linearGradient>
-    <filter id="h-blur2"><feGaussianBlur stdDeviation="22"/></filter>
-    <filter id="h-soft2"><feGaussianBlur stdDeviation="6"/></filter>
-    <clipPath id="h-clip2"><rect width="480" height="600" rx="12"/></clipPath>
-  </defs>
-  <g clip-path="url(#h-clip2)">
-    <rect width="480" height="600" fill="url(#h-bg)"/>
-    <ellipse cx="300" cy="220" rx="220" ry="200" fill="url(#h-glow1)" filter="url(#h-blur2)"/>
-    <ellipse cx="140" cy="400" rx="160" ry="140" fill="url(#h-glow2)" filter="url(#h-blur2)"/>
-    <line x1="0" y1="120" x2="480" y2="120" stroke="url(#h-scan)" stroke-width="0.4"/>
-    <line x1="0" y1="240" x2="480" y2="240" stroke="url(#h-scan)" stroke-width="0.4"/>
-    <line x1="0" y1="360" x2="480" y2="360" stroke="url(#h-scan)" stroke-width="0.4"/>
-    <line x1="0" y1="480" x2="480" y2="480" stroke="url(#h-scan)" stroke-width="0.4"/>
-    <line x1="120" y1="0" x2="120" y2="600" stroke="url(#h-vline)" stroke-width="0.4"/>
-    <line x1="240" y1="0" x2="240" y2="600" stroke="url(#h-vline)" stroke-width="0.4"/>
-    <line x1="360" y1="0" x2="360" y2="600" stroke="url(#h-vline)" stroke-width="0.4"/>
-    <ellipse cx="240" cy="175" rx="52" ry="58" fill="#1a1612" stroke="#b89860" stroke-width="0.5" stroke-opacity="0.25"/>
-    <ellipse cx="240" cy="175" rx="40" ry="44" fill="#b89860" fill-opacity="0.04" filter="url(#h-soft2)"/>
-    <path d="M140,320 Q160,270 200,255 Q218,248 240,248 Q262,248 280,255 Q320,270 340,320 L350,440 L130,440 Z" fill="#111010" stroke="#b89860" stroke-width="0.5" stroke-opacity="0.2"/>
-    <path d="M200,255 L220,300 L240,280 L260,300 L280,255" fill="none" stroke="#b89860" stroke-width="0.5" stroke-opacity="0.3"/>
-    <path d="M235,280 L230,340 L240,355 L250,340 L245,280 Z" fill="#b89860" fill-opacity="0.12" stroke="#b89860" stroke-width="0.4" stroke-opacity="0.3"/>
-    <line x1="240" y1="0" x2="240" y2="120" stroke="#b89860" stroke-width="0.5" stroke-opacity="0.12"/>
-    <line x1="180" y1="0" x2="210" y2="100" stroke="#b89860" stroke-width="0.3" stroke-opacity="0.07"/>
-    <line x1="300" y1="0" x2="270" y2="100" stroke="#b89860" stroke-width="0.3" stroke-opacity="0.07"/>
-    <polygon points="390,40 420,56 420,90 390,106 360,90 360,56" fill="none" stroke="#b89860" stroke-width="0.5" stroke-opacity="0.2"/>
-    <polygon points="390,52 410,63 410,86 390,97 370,86 370,63" fill="none" stroke="#b89860" stroke-width="0.3" stroke-opacity="0.12"/>
-    <circle cx="72" cy="510" r="36" fill="none" stroke="#b89860" stroke-width="0.5" stroke-opacity="0.18"/>
-    <circle cx="72" cy="510" r="24" fill="none" stroke="#b89860" stroke-width="0.3" stroke-opacity="0.12"/>
-    <circle cx="72" cy="510" r="4" fill="#b89860" fill-opacity="0.2"/>
-    <path d="M130,440 L72,474" stroke="#b89860" stroke-width="0.4" stroke-opacity="0.2"/>
-    <path d="M350,440 L408,474" stroke="#b89860" stroke-width="0.4" stroke-opacity="0.15"/>
-    <circle cx="408" cy="474" r="3" fill="none" stroke="#b89860" stroke-width="0.5" stroke-opacity="0.25"/>
-    <rect x="48" y="50" width="88" height="22" rx="3" fill="#b89860" fill-opacity="0.06" stroke="#b89860" stroke-width="0.4" stroke-opacity="0.3"/>
-    <text x="56" y="65" font-family="monospace" font-size="8" fill="#b89860" fill-opacity="0.6" letter-spacing="1">AGILVA &middot; 2019</text>
-    <rect x="344" y="50" width="88" height="22" rx="3" fill="#b89860" fill-opacity="0.06" stroke="#b89860" stroke-width="0.4" stroke-opacity="0.3"/>
-    <text x="352" y="65" font-family="monospace" font-size="8" fill="#b89860" fill-opacity="0.6" letter-spacing="1">STRATEGY</text>
-    <rect x="0" y="0" width="480" height="1.5" fill="url(#h-scan)" opacity="0.5"><animateTransform attributeName="transform" type="translate" from="0,80" to="0,520" dur="3.5s" repeatCount="indefinite"/></rect>
-    <rect width="480" height="600" fill="url(#h-fade)"/>
-    <rect x="0" y="558" width="480" height="42" fill="#0c0c0c" fill-opacity="0.95"/>
-    <line x1="0" y1="558" x2="480" y2="558" stroke="url(#h-bar)" stroke-width="0.5"/>
-    <text x="24" y="583" font-family="Georgia,serif" font-size="13" fill="#f0ece4" fill-opacity="0.55" letter-spacing="1">Strategy &amp; Execution</text>
-    <text x="456" y="583" font-family="monospace" font-size="8" fill="#b89860" fill-opacity="0.5" letter-spacing="1" text-anchor="end">GLOBAL</text>
-    <path d="M24,80 L24,50 L54,50" fill="none" stroke="#b89860" stroke-width="0.8" stroke-opacity="0.5"/>
-    <path d="M456,50 L426,50 M456,50 L456,80" fill="none" stroke="#b89860" stroke-width="0.8" stroke-opacity="0.5"/>
-    <path d="M24,510 L24,540 L54,540" fill="none" stroke="#b89860" stroke-width="0.8" stroke-opacity="0.5"/>
-    <path d="M456,540 L426,540 M456,540 L456,510" fill="none" stroke="#b89860" stroke-width="0.8" stroke-opacity="0.5"/>
-  </g>
-</svg>
+        
         
         <div class="hero-img-tag">
           <span class="hero-img-tag-left">Agilva Solutions</span>
@@ -651,56 +578,7 @@ nav{
     </div>
     <div class="reveal reveal-d2">
       <div class="about-visual-box">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 520" width="100%" height="100%" style="display:block;position:absolute;inset:0;border-radius:12px;">
-  <defs>
-    <radialGradient id="a-bg2" cx="40%" cy="30%" r="70%"><stop offset="0%" stop-color="#161410"/><stop offset="100%" stop-color="#080808"/></radialGradient>
-    <radialGradient id="a-glow3" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#b89860" stop-opacity="0.14"/><stop offset="100%" stop-color="#b89860" stop-opacity="0"/></radialGradient>
-    <linearGradient id="a-hline2" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#b89860" stop-opacity="0"/><stop offset="50%" stop-color="#b89860" stop-opacity="0.2"/><stop offset="100%" stop-color="#b89860" stop-opacity="0"/></linearGradient>
-    <linearGradient id="a-fade2" x1="0%" y1="65%" x2="0%" y2="100%"><stop offset="0%" stop-color="#080808" stop-opacity="0"/><stop offset="100%" stop-color="#080808" stop-opacity="1"/></linearGradient>
-    <linearGradient id="a-bar2" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#b89860" stop-opacity="0"/><stop offset="30%" stop-color="#b89860" stop-opacity="0.5"/><stop offset="70%" stop-color="#b89860" stop-opacity="0.5"/><stop offset="100%" stop-color="#b89860" stop-opacity="0"/></linearGradient>
-    <filter id="a-blur2"><feGaussianBlur stdDeviation="20"/></filter>
-    <clipPath id="a-clip2"><rect width="400" height="520" rx="12"/></clipPath>
-  </defs>
-  <g clip-path="url(#a-clip2)">
-    <rect width="400" height="520" fill="url(#a-bg2)"/>
-    <ellipse cx="200" cy="220" rx="180" ry="180" fill="url(#a-glow3)" filter="url(#a-blur2)"/>
-    <line x1="0" y1="104" x2="400" y2="104" stroke="url(#a-hline2)" stroke-width="0.4"/>
-    <line x1="0" y1="208" x2="400" y2="208" stroke="url(#a-hline2)" stroke-width="0.4"/>
-    <line x1="0" y1="312" x2="400" y2="312" stroke="url(#a-hline2)" stroke-width="0.4"/>
-    <line x1="0" y1="416" x2="400" y2="416" stroke="url(#a-hline2)" stroke-width="0.4"/>
-    <path d="M0,420 L0,370 L30,370 L30,340 L50,340 L50,310 L70,310 L70,340 L90,340 L90,350 L110,350 L110,300 L130,300 L130,280 L150,280 L150,300 L170,300 L170,260 L190,260 L190,240 L210,240 L210,260 L230,260 L230,280 L250,280 L250,300 L270,300 L270,320 L290,320 L290,290 L310,290 L310,310 L330,310 L330,350 L350,350 L350,330 L370,330 L370,360 L390,360 L390,370 L400,370 L400,420 Z" fill="#0f0e0c" stroke="#b89860" stroke-width="0.5" stroke-opacity="0.2"/>
-    <rect x="115" y="288" width="4" height="4" fill="#b89860" fill-opacity="0.3"/>
-    <rect x="175" y="268" width="4" height="5" fill="#b89860" fill-opacity="0.35"/>
-    <rect x="195" y="248" width="5" height="5" fill="#b89860" fill-opacity="0.4"/>
-    <rect x="295" y="298" width="4" height="4" fill="#b89860" fill-opacity="0.3"/>
-    <rect x="355" y="338" width="4" height="4" fill="#b89860" fill-opacity="0.25"/>
-    <circle cx="200" cy="195" r="90" fill="none" stroke="#b89860" stroke-width="0.5" stroke-opacity="0.18"/>
-    <circle cx="200" cy="195" r="72" fill="none" stroke="#b89860" stroke-width="0.4" stroke-opacity="0.14"/>
-    <circle cx="200" cy="195" r="52" fill="none" stroke="#b89860" stroke-width="0.8" stroke-opacity="0.25"/>
-    <polygon points="200,148 228,157 240,185 231,213 203,224 175,215 163,187 172,159" fill="none" stroke="#b89860" stroke-width="0.6" stroke-opacity="0.35"/>
-    <polygon points="200,160 222,167 232,189 225,211 203,218 181,211 171,189 178,167" fill="#b89860" fill-opacity="0.03"/>
-    <line x1="200" y1="105" x2="200" y2="148" stroke="#b89860" stroke-width="0.5" stroke-opacity="0.25"/>
-    <line x1="200" y1="242" x2="200" y2="285" stroke="#b89860" stroke-width="0.5" stroke-opacity="0.25"/>
-    <line x1="110" y1="195" x2="148" y2="195" stroke="#b89860" stroke-width="0.5" stroke-opacity="0.25"/>
-    <line x1="252" y1="195" x2="290" y2="195" stroke="#b89860" stroke-width="0.5" stroke-opacity="0.25"/>
-    <polygon points="200,175 212,188 200,201 188,188" fill="#b89860" fill-opacity="0.12" stroke="#b89860" stroke-width="0.8" stroke-opacity="0.5"/>
-    <circle cx="200" cy="188" r="4" fill="#b89860" fill-opacity="0.5"/>
-    <rect x="24" y="40" width="80" height="18" rx="3" fill="#b89860" fill-opacity="0.05" stroke="#b89860" stroke-width="0.4" stroke-opacity="0.3"/>
-    <text x="32" y="52" font-family="monospace" font-size="7.5" fill="#b89860" fill-opacity="0.55" letter-spacing="1">WHO WE ARE</text>
-    <rect x="296" y="40" width="80" height="18" rx="3" fill="#b89860" fill-opacity="0.05" stroke="#b89860" stroke-width="0.4" stroke-opacity="0.3"/>
-    <text x="304" y="52" font-family="monospace" font-size="7.5" fill="#b89860" fill-opacity="0.55" letter-spacing="1">CUTTACK &middot; IN</text>
-    <rect x="0" y="0" width="400" height="1.5" fill="url(#a-hline2)" opacity="0.6"><animateTransform attributeName="transform" type="translate" from="0,60" to="0,460" dur="4.5s" repeatCount="indefinite"/></rect>
-    <rect width="400" height="520" fill="url(#a-fade2)"/>
-    <rect x="0" y="482" width="400" height="38" fill="#0c0c0c" fill-opacity="0.95"/>
-    <line x1="0" y1="482" x2="400" y2="482" stroke="url(#a-bar2)" stroke-width="0.5"/>
-    <text x="24" y="505" font-family="Georgia,serif" font-size="12" fill="#f0ece4" fill-opacity="0.5" letter-spacing="1">Agilva Solutions</text>
-    <text x="376" y="505" font-family="monospace" font-size="8" fill="#b89860" fill-opacity="0.5" letter-spacing="1" text-anchor="end">2019–</text>
-    <path d="M24,68 L24,44 L48,44" fill="none" stroke="#b89860" stroke-width="0.8" stroke-opacity="0.45"/>
-    <path d="M376,44 L352,44 M376,44 L376,68" fill="none" stroke="#b89860" stroke-width="0.8" stroke-opacity="0.45"/>
-    <path d="M24,456 L24,478 L48,478" fill="none" stroke="#b89860" stroke-width="0.8" stroke-opacity="0.45"/>
-    <path d="M376,478 L352,478 M376,478 L376,456" fill="none" stroke="#b89860" stroke-width="0.8" stroke-opacity="0.45"/>
-  </g>
-</svg>
+        
       </div>
     </div>
   </div>
@@ -758,38 +636,36 @@ nav{
 <!-- CONTACT -->
 <section id="contact">
   <div class="contact-grid">
-    <div class="reveal">
+    <div class="reveal" style="display:flex;flex-direction:column;justify-content:center;height:100%;">
       <div class="sec-tag">Get in touch</div>
       <h2 class="contact-title">Let&rsquo;s<br><em>talk.</em></h2>
       <p class="contact-desc">Tell us about your project. We&rsquo;ll get back to you within one business day.</p>
-      <div class="contact-detail">
-      </div>
     </div>
     <div class="reveal reveal-d2">
       <div class="contact-form-tile">
-        <form id="contact-form" onsubmit="handleSubmit(event)">
+        <form id="contact-form" onsubmit="sendForm(event)">
           <div class="form-row-2">
             <div class="form-row" style="margin-bottom:0;">
               <label class="form-label">First name</label>
-              <input class="form-input" type="text" placeholder="John" required/>
+              <input class="form-input" type="text" name="first_name" placeholder="John" required/>
             </div>
             <div class="form-row" style="margin-bottom:0;">
               <label class="form-label">Last name</label>
-              <input class="form-input" type="text" placeholder="Smith" required/>
+              <input class="form-input" type="text" name="last_name" placeholder="Smith" required/>
             </div>
           </div>
           <div class="form-row">
             <label class="form-label">Work email</label>
-            <input class="form-input" type="email" placeholder="john@company.com" required/>
+            <input class="form-input" type="email" name="email" placeholder="john@company.com" required/>
           </div>
           <div class="form-row">
             <label class="form-label">Company</label>
-            <input class="form-input" type="text" placeholder="Your company name"/>
+            <input class="form-input" type="text" name="company" placeholder="Your company name"/>
           </div>
           <div class="form-row">
             <label class="form-label">Service interested in</label>
             <select class="form-select form-input">
-              <option value="" disabled selected>Select a service</option>
+              <option value="" disabled selected name="service">Select a service</option>
               <option>Atlassian</option>
               <option>GitHub</option>
               <option>ServiceNow</option>
@@ -800,7 +676,7 @@ nav{
           </div>
           <div class="form-row">
             <label class="form-label">Message</label>
-            <textarea class="form-textarea" placeholder="Tell us about your project or challenge..." required></textarea>
+            <textarea class="form-textarea" name="message" placeholder="Tell us about your project or challenge..." required></textarea>
           </div>
           <div class="captcha-wrap">
             <!-- Replace YOUR_SITE_KEY with your actual Google reCAPTCHA v2 site key -->
@@ -881,13 +757,7 @@ nav{
   document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
 
   // Form submit
-  function handleSubmit(e){
-    e.preventDefault();
-    const resp = typeof grecaptcha !== 'undefined' ? grecaptcha.getResponse() : null;
-    if(!resp || resp.length === 0){
-      alert('Please complete the reCAPTCHA verification.');
-      return;
-    }
+  
     const btn = document.querySelector('.form-submit');
     btn.textContent = 'Message Sent ✓';
     btn.style.background = '#3a6a3a';
@@ -907,10 +777,7 @@ nav{
     if(e.target===document.getElementById('contactPopup')) closePopup();
   }
   document.addEventListener('keydown',function(e){if(e.key==='Escape') closePopup();});
-  function handlePopupSubmit(e){
-    e.preventDefault();
-    var resp=typeof grecaptcha!=='undefined'?grecaptcha.getResponse():null;
-    if(!resp||resp.length===0){alert('Please complete the reCAPTCHA verification.');return;}
+  
     var btn=document.querySelector('#hp-popup-form .p-form-submit');
     btn.textContent='Message Sent ✓';
     btn.style.background='#3a6a3a';
@@ -918,42 +785,44 @@ nav{
     setTimeout(closePopup,2200);
   }
 
+
+  // ── EmailJS ───────────────────────────────────────────────────
+  // Replace the three values below with your own from emailjs.com
+  var EMAILJS_PUBLIC_KEY  = "YOUR_PUBLIC_KEY";
+  var EMAILJS_SERVICE_ID  = "YOUR_SERVICE_ID";
+  var EMAILJS_TEMPLATE_ID = "YOUR_TEMPLATE_ID";
+  (function(){ emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY }); })();
+
+  function sendForm(e) {
+    e.preventDefault();
+    var form = document.getElementById("contact-form");
+    var btn  = form.querySelector(".form-submit");
+    var resp = typeof grecaptcha !== "undefined" ? grecaptcha.getResponse() : "skip";
+    if (resp !== "skip" && resp.length === 0) {
+      alert("Please complete the reCAPTCHA verification.");
+      return;
+    }
+    btn.textContent = "Sending…";
+    btn.disabled = true;
+    emailjs.sendForm(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, form)
+      .then(function() {
+        btn.textContent = "Message Sent ✓";
+        btn.style.background = "#3a6a3a";
+        setTimeout(function(){
+          closePopup();
+          form.reset();
+          btn.textContent = "Send Message →";
+          btn.style.background = "";
+          btn.disabled = false;
+        }, 2500);
+      }, function(error) {
+        btn.textContent = "Send Message →";
+        btn.disabled = false;
+        alert("Something went wrong. Please email us at info@agilva.com
+Error: " + JSON.stringify(error));
+      });
+  }
+
 </script>
-
-<!-- Contact Popup -->
-<div class="popup-overlay" id="contactPopup" onclick="closePopupOnOverlay(event)">
-  <div class="popup-card">
-    <button class="popup-close" onclick="closePopup()">&times;</button>
-    <div class="popup-tag">Get in touch</div>
-    <h2 class="popup-title">Let&rsquo;s<br><em>talk.</em></h2>
-    <p class="popup-desc">Tell us about your project. We&rsquo;ll get back to you within one business day.</p>
-    <div class="popup-detail">
-      <div class="popup-detail-item"><span class="popup-detail-dot"></span><a href="mailto:info@agilva.com">info@agilva.com</a></div>
-      <div class="popup-detail-item"><span class="popup-detail-dot"></span>Cuttack, Odisha, India</div>
-      <div class="popup-detail-item"><span class="popup-detail-dot"></span>Available globally</div>
-    </div>
-    <div class="popup-divider"></div>
-    <form id="hp-popup-form" onsubmit="handlePopupSubmit(event)">
-      <div class="p-form-row-2">
-        <div class="p-form-row" style="margin-bottom:0;"><label class="p-form-label">First name</label><input class="p-form-input" type="text" placeholder="John" required/></div>
-        <div class="p-form-row" style="margin-bottom:0;"><label class="p-form-label">Last name</label><input class="p-form-input" type="text" placeholder="Smith" required/></div>
-      </div>
-      <div class="p-form-row"><label class="p-form-label">Work email</label><input class="p-form-input" type="email" placeholder="john@company.com" required/></div>
-      <div class="p-form-row"><label class="p-form-label">Company</label><input class="p-form-input" type="text" placeholder="Your company name"/></div>
-      <div class="p-form-row">
-        <label class="p-form-label">Service interested in</label>
-        <select class="p-form-select p-form-input">
-          <option value="" disabled selected>Select a service</option>
-          <option>Atlassian</option><option>ServiceNow</option><option>GitHub</option><option>ClickUp</option><option>Asana</option><option>General Consulting</option>
-        </select>
-      </div>
-      <div class="p-form-row"><label class="p-form-label">Message</label><textarea class="p-form-textarea" placeholder="Tell us about your project or challenge..." required></textarea></div>
-      <div class="p-captcha-wrap"><div class="g-recaptcha" data-sitekey="YOUR_SITE_KEY" data-theme="dark"></div></div>
-      <button type="submit" class="p-form-submit">Send Message &rarr;</button>
-      <p class="p-form-note">We respect your privacy. Your information is never shared with third parties.</p>
-    </form>
-  </div>
-</div>
-
 </body>
 </html>
