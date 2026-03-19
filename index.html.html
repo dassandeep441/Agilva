@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>agilva — strategy & creative services</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0a0a0a;
+    --bg2: #111111;
+    --bg3: #181818;
+    --line: rgba(255,255,255,0.07);
+    --text: #e8e4dc;
+    --muted: rgba(232,228,220,0.4);
+    --accent: #c8a96e;
+    --accent2: #8fb8a0;
+    --serif: 'Cormorant Garamond', Georgia, serif;
+    --mono: 'DM Mono', 'Courier New', monospace;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--mono);
+    font-size: 13px;
+    line-height: 1.7;
+    cursor: none;
+    overflow-x: hidden;
+  }
+
+  #cursor {
+    position: fixed; z-index: 9999;
+    width: 8px; height: 8px;
+    background: var(--accent);
+    border-radius: 50%;
+    pointer-events: none;
+    transform: translate(-50%, -50%);
+    mix-blend-mode: difference;
+  }
+  #cursor-ring {
+    position: fixed; z-index: 9998;
+    width: 32px; height: 32px;
+    border: 0.5px solid rgba(200,169,110,0.5);
+    border-radius: 50%;
+    pointer-events: none;
+    transform: translate(-50%, -50%);
+    transition: width 0.3s, height 0.3s, border-color 0.3s;
+  }
+
+  .grid-bg {
+    position: fixed; inset: 0; z-index: 0;
+    background-image:
+      linear-gradient(var(--line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--line) 1px, transparent 1px);
+    background-size: 80px 80px;
+    pointer-events: none;
+  }
+
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 28px 48px;
+    border-bottom: 1px solid var(--line);
+    background: rgba(10,10,10,0.85);
+    backdrop-filter: blur(12px);
+  }
+  .nav-logo { text-decoration: none; display: flex; align-items: center; }
+  .nav-logo-REMOVE {
+    font-family: var(--serif);
+    font-size: 22px; font-weight: 300; letter-spacing: 0.15em;
+    color: var(--text); text-decoration: none;
+  }
+  .nav-logo span { color: var(--accent); }
+  .nav-links { display: flex; gap: 40px; list-style: none; }
+  .nav-links a {
+    color: var(--muted); text-decoration: none;
+    font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--accent); }
+  .nav-cta {
+    font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase;
+    color: var(--bg); background: var(--accent);
+    border: none; padding: 10px 22px;
+    cursor: none; font-family: var(--mono);
+    transition: background 0.2s;
+  }
+  .nav-cta:hover { background: #d4b87a; }
+
+  #hero {
+    position: relative; z-index: 1;
+    min-height: 100vh;
+    display: flex; flex-direction: column; justify-content: flex-end;
+    padding: 0 48px 80px;
+    overflow: hidden;
+  }
+  .hero-eyebrow {
+    font-size: 11px; letter-spacing: 0.3em; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 24px;
+    opacity: 0; animation: fadeUp 0.8s ease 0.2s forwards;
+  }
+  .hero-title {
+    font-family: var(--serif);
+    font-size: clamp(64px, 9vw, 130px);
+    font-weight: 300; line-height: 0.95; letter-spacing: -0.01em;
+    color: var(--text);
+    opacity: 0; animation: fadeUp 0.9s ease 0.35s forwards;
+  }
+  .hero-title em { font-style: italic; color: var(--accent); }
+  .hero-sub {
+    max-width: 420px; margin-top: 36px;
+    color: var(--muted); font-size: 13px; line-height: 1.8;
+    opacity: 0; animation: fadeUp 0.9s ease 0.55s forwards;
+  }
+  .hero-scroll {
+    position: absolute; right: 48px; bottom: 80px;
+    display: flex; flex-direction: column; align-items: center; gap: 12px;
+    color: var(--muted); font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase;
+    opacity: 0; animation: fadeUp 0.9s ease 0.8s forwards;
+  }
+  .hero-scroll-line {
+    width: 1px; height: 60px;
+    background: linear-gradient(to bottom, var(--accent), transparent);
+    animation: scrollLine 2s ease-in-out infinite;
+  }
+  @keyframes scrollLine {
+    0%,100% { transform: scaleY(1); opacity: 1; }
+    50% { transform: scaleY(0.5); opacity: 0.4; }
+  }
+  .hero-number {
+    position: absolute; right: 48px; top: 50%;
+    font-family: var(--serif); font-size: 240px; font-weight: 300;
+    color: rgba(255,255,255,0.025); line-height: 1;
+    pointer-events: none; user-select: none;
+    transform: translateY(-50%);
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  section { position: relative; z-index: 1; }
+
+  .section-header {
+    display: flex; align-items: baseline; gap: 24px;
+    margin-bottom: 60px;
+  }
+  .section-num { font-size: 11px; letter-spacing: 0.2em; color: var(--accent); }
+  .section-title {
+    font-family: var(--serif); font-size: clamp(36px, 5vw, 56px);
+    font-weight: 300; line-height: 1.1;
+  }
+  .section-line { flex: 1; height: 1px; background: var(--line); margin-bottom: 6px; }
+
+  .services-grid--atlassian {
+    grid-template-columns: repeat(5, 1fr);
+  }
+  .services-grid--other {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  .service-card--wide {
+    grid-column: 1 / 3;
+  }
+
+  .cat-header {
+    display: flex; align-items: center; gap: 16px;
+    margin-bottom: 0;
+  }
+  .cat-pill {
+    font-size: 10px; letter-spacing: .2em; text-transform: uppercase;
+    padding: 5px 14px;
+    border: 0.5px solid rgba(200,185,122,0.4);
+    color: var(--accent);
+    white-space: nowrap;
+    border-radius: 2px;
+    margin-bottom: 20px;
+  }
+  .cat-pill--other {
+    border-color: rgba(255,255,255,0.12);
+    color: var(--muted);
+  }
+  .cat-line { flex: 1; height: 0.5px; background: var(--line); margin-bottom: 20px; }
+
+  @media (max-width: 1100px) {
+    .services-grid--atlassian { grid-template-columns: repeat(3, 1fr); }
+    .services-grid--other { grid-template-columns: repeat(2, 1fr); }
+    .service-card--wide { grid-column: auto; }
+  }
+  @media (max-width: 700px) {
+    .services-grid--atlassian,
+    .services-grid--other { grid-template-columns: 1fr; }
+    .service-card--wide { grid-column: auto; }
+  }
+  .service-card {
+    padding: 48px 40px;
+    border-right: 1px solid var(--line);
+    transition: background 0.3s;
+    position: relative; overflow: hidden;
+  }
+  .service-card:last-child { border-right: none; }
+  .service-card:hover { background: var(--bg3); }
+  .service-card::before {
+    content: ''; position: absolute; bottom: 0; left: 0;
+    width: 0; height: 1px; background: var(--accent);
+    transition: width 0.4s ease;
+  }
+  .service-card:hover::before { width: 100%; }
+  .service-num { font-size: 11px; color: var(--accent); margin-bottom: 32px; letter-spacing: 0.1em; }
+  .service-name { font-family: var(--serif); font-size: 28px; font-weight: 300; margin-bottom: 20px; line-height: 1.2; }
+  .service-desc { color: var(--muted); font-size: 12px; line-height: 1.9; }
+  .service-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 28px; }
+  .tag {
+    font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase;
+    border: 0.5px solid var(--line); padding: 4px 10px; color: var(--muted);
+  }
+
+  #work { padding: 120px 48px; border-top: 1px solid var(--line); }
+  .work-grid { display: flex; flex-direction: column; }
+  .work-item {
+    display: grid; grid-template-columns: 80px 1fr 200px 120px;
+    align-items: center; gap: 40px;
+    padding: 32px 0; border-bottom: 1px solid var(--line);
+    cursor: none; transition: padding-left 0.3s ease;
+    text-decoration: none; color: inherit; position: relative;
+  }
+  .work-item:first-child { border-top: 1px solid var(--line); }
+  .work-item:hover { padding-left: 16px; }
+  .work-item:hover .work-num { color: var(--accent); }
+  .work-num { font-size: 11px; color: var(--muted); letter-spacing: 0.1em; }
+  .work-name { font-family: var(--serif); font-size: 28px; font-weight: 300; letter-spacing: -0.01em; }
+  .work-category { font-size: 11px; color: var(--muted); letter-spacing: 0.1em; }
+  .work-year { font-size: 11px; color: var(--muted); text-align: right; }
+  .work-arrow {
+    position: absolute; right: 0; font-size: 20px; color: var(--accent);
+    opacity: 0; transition: opacity 0.2s, transform 0.2s; transform: translateX(-8px);
+  }
+  .work-item:hover .work-arrow { opacity: 1; transform: translateX(0); }
+
+  #about {
+    padding: 120px 48px; border-top: 1px solid var(--line);
+    display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start;
+  }
+  .about-text {
+    font-family: var(--serif); font-size: 24px; font-weight: 300;
+    line-height: 1.6; margin-bottom: 32px;
+  }
+  .about-text em { font-style: italic; color: var(--accent); }
+  .about-body { color: var(--muted); font-size: 13px; line-height: 2; }
+  .about-right { padding-top: 20px; }
+  .stat-row {
+    display: flex; justify-content: space-between; align-items: baseline;
+    padding: 24px 0; border-bottom: 1px solid var(--line);
+  }
+  .stat-row:first-child { border-top: 1px solid var(--line); }
+  .stat-num { font-family: var(--serif); font-size: 48px; font-weight: 300; }
+  .stat-num sup { color: var(--accent); font-size: 24px; }
+  .stat-label { font-size: 11px; color: var(--muted); letter-spacing: 0.15em; text-transform: uppercase; }
+
+  #contact { padding: 120px 48px; border-top: 1px solid var(--line); text-align: center; }
+  .contact-big {
+    font-family: var(--serif);
+    font-size: clamp(48px, 8vw, 110px);
+    font-weight: 300; line-height: 1; margin: 40px 0;
+  }
+  .contact-big a {
+    color: var(--text); text-decoration: none; transition: color 0.2s;
+    position: relative; display: inline-block;
+  }
+  .contact-big a::after {
+    content: ''; position: absolute; bottom: 4px; left: 0; right: 0;
+    height: 2px; background: var(--accent);
+    transform: scaleX(0); transform-origin: right; transition: transform 0.4s ease;
+  }
+  .contact-big a:hover::after { transform: scaleX(1); transform-origin: left; }
+  .contact-big a:hover { color: var(--accent); }
+  .contact-sub { color: var(--muted); font-size: 12px; letter-spacing: 0.15em; text-transform: uppercase; }
+
+  footer {
+    padding: 40px 48px; border-top: 1px solid var(--line);
+    display: flex; justify-content: space-between; align-items: center;
+    position: relative; z-index: 1;
+  }
+  .footer-logo { font-family: var(--serif); font-size: 18px; font-weight: 300; letter-spacing: 0.1em; color: var(--muted); }
+  .footer-copy { font-size: 11px; color: var(--muted); }
+  .footer-links { display: flex; gap: 32px; }
+  .footer-links a { font-size: 11px; color: var(--muted); text-decoration: none; letter-spacing: 0.1em; transition: color 0.2s; }
+  .footer-links a:hover { color: var(--accent); }
+
+  .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.7s ease, transform 0.7s ease; }
+  .reveal.visible { opacity: 1; transform: none; }
+
+  @media (max-width: 900px) {
+    nav { padding: 20px 24px; }
+    .nav-links { display: none; }
+    #hero { padding: 0 24px 60px; }
+    .hero-number { display: none; }
+    #services { padding: 80px 24px; }
+    .services-grid { grid-template-columns: 1fr; }
+    .service-card { border-right: none; border-bottom: 1px solid var(--line); }
+    #work { padding: 80px 24px; }
+    .work-item { grid-template-columns: 60px 1fr; }
+    .work-category, .work-year { display: none; }
+    #about { padding: 80px 24px; grid-template-columns: 1fr; gap: 48px; }
+    #contact { padding: 80px 24px; }
+    footer { padding: 32px 24px; flex-direction: column; gap: 16px; text-align: center; }
+  }
+
+  .platform-card{
+    border-top:0.5px solid var(--line);border-right:0.5px solid var(--line);
+    padding:36px 28px;text-decoration:none;color:var(--text);
+    display:flex;flex-direction:column;gap:8px;
+    position:relative;overflow:hidden;transition:background .3s;
+  }
+  .platform-card:last-child{border-right:none}
+  .platform-card:hover{background:var(--bg3)}
+  .platform-card:hover .plat-arrow{opacity:1;transform:translate(3px,-3px)}
+  .plat-icon{font-size:10px;margin-bottom:8px}
+  .plat-name{font-family:var(--serif);font-size:22px;font-weight:300}
+  .plat-desc{font-size:11px;color:var(--muted);line-height:1.6}
+  .plat-arrow{margin-top:auto;font-size:16px;color:var(--accent);opacity:0;transition:opacity .2s,transform .2s}
+  @media(max-width:900px){
+    #platforms .platform-card{border-right:none;grid-column:1/-1}
+    #platforms>div:first-child+div,#platforms>div{display:none}
+  }
+
+
+  /* Tool tiles */
+  #tool-tiles { padding:96px 48px; border-top:0.5px solid var(--line); }
+  .tiles-header { display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:48px; flex-wrap:wrap; gap:16px; }
+  .tiles-label { font-size:10px; letter-spacing:.25em; text-transform:uppercase; color:var(--accent); display:flex; align-items:center; gap:10px; }
+  .tiles-label::before { content:''; width:20px; height:0.5px; background:var(--accent); display:block; }
+  .tiles-eyebrow { font-family:var(--serif); font-size:clamp(28px,3.5vw,42px); font-weight:300; line-height:1.1; }
+  .tiles-eyebrow em { font-style:italic; color:var(--accent); }
+  .tiles-sub { max-width:280px; font-size:12px; color:var(--muted); line-height:1.8; text-align:right; }
+  .tools-grid { display:grid; grid-template-columns:repeat(5,1fr); gap:16px; }
+  .tool-tile {
+    display:flex; flex-direction:column;
+    background:var(--bg2); border:0.5px solid var(--line); border-radius:16px;
+    padding:28px 24px 24px; text-decoration:none; color:var(--text);
+    transition:border-color .3s, transform .25s; position:relative; overflow:hidden; cursor:none;
+  }
+  .tool-tile::before {
+    content:''; position:absolute; inset:0; border-radius:16px;
+    background:radial-gradient(circle at 20% 20%, var(--tile-color), transparent 65%);
+    opacity:0; transition:opacity .4s;
+  }
+  .tool-tile:hover { border-color:var(--tile-color); transform:translateY(-5px); }
+  .tool-tile:hover::before { opacity:.09; }
+  .tool-tile:hover .tile-arrow { opacity:1; transform:translate(0,0); }
+  .tool-tile:hover .tile-tag { border-color:rgba(200,169,110,.3); color:var(--text); }
+  .tile-top { display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:20px; }
+  .tile-icon { width:36px; height:36px; }
+  .tile-icon svg { width:100%; height:100%; }
+  .tile-arrow { font-size:16px; color:var(--accent); opacity:0; transform:translate(-4px,4px); transition:opacity .2s, transform .2s; }
+  .tile-name { font-family:var(--serif); font-size:22px; font-weight:300; margin-bottom:10px; line-height:1.1; }
+  .tile-desc { font-size:11px; color:var(--muted); line-height:1.75; flex:1; margin-bottom:20px; }
+  .tile-tags { display:flex; flex-wrap:wrap; gap:6px; }
+  .tile-tag { font-size:10px; letter-spacing:.1em; text-transform:uppercase; border:0.5px solid var(--line); color:var(--muted); padding:3px 8px; border-radius:4px; transition:border-color .2s, color .2s; }
+
+  /* Blog tiles */
+  #blog-tiles { padding:96px 48px; border-top:0.5px solid var(--line); }
+  .blog-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-top:48px; }
+  .blog-tile {
+    background:var(--bg2); border:0.5px solid var(--line); border-radius:16px;
+    padding:32px 28px; display:flex; flex-direction:column;
+    transition:background .3s, border-color .3s, transform .25s; cursor:pointer;
+  }
+  .blog-tile:hover { background:var(--bg3); border-color:rgba(200,169,110,.25); transform:translateY(-5px); }
+  .blog-tile:hover .blog-read { color:var(--accent); }
+  .blog-tile:hover .blog-read span { transform:translateX(5px); }
+  .blog-tile-top { display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; }
+  .blog-tag { font-size:10px; letter-spacing:.12em; text-transform:uppercase; border:0.5px solid; padding:3px 10px; border-radius:4px; }
+  .blog-meta { font-size:10px; color:var(--muted); letter-spacing:.08em; }
+  .blog-title { font-family:var(--serif); font-size:20px; font-weight:300; line-height:1.3; margin-bottom:14px; }
+  .blog-desc { font-size:12px; color:var(--muted); line-height:1.8; flex:1; margin-bottom:24px; }
+  .blog-read { font-size:11px; letter-spacing:.12em; text-transform:uppercase; color:var(--muted); transition:color .2s; }
+  .blog-read span { display:inline-block; transition:transform .2s; }
+
+  /* Footer nav */
+  .footer-nav { border-top:0.5px solid var(--line); background:var(--bg2); padding:64px 48px 40px; }
+  .footer-nav-grid { display:grid; grid-template-columns:2fr 1fr 1fr 1fr; gap:48px; margin-bottom:56px; }
+  .footer-brand img { height:28px; width:auto; filter:brightness(0) invert(.55); margin-bottom:20px; display:block; }
+  .footer-brand p { font-size:12px; color:var(--muted); line-height:1.8; max-width:260px; }
+  .footer-col-title { font-size:10px; letter-spacing:.2em; text-transform:uppercase; color:var(--accent); margin-bottom:20px; }
+  .footer-col ul { list-style:none; display:flex; flex-direction:column; gap:12px; }
+  .footer-col ul a { font-size:12px; color:var(--muted); text-decoration:none; transition:color .2s; }
+  .footer-col ul a:hover { color:var(--text); }
+  .footer-bottom { border-top:0.5px solid var(--line); padding-top:28px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; }
+  .footer-copy { font-size:11px; color:var(--muted); letter-spacing:.05em; }
+  .footer-socials { display:flex; gap:20px; }
+  .footer-socials a { font-size:11px; color:var(--muted); text-decoration:none; letter-spacing:.12em; text-transform:uppercase; transition:color .2s; }
+  .footer-socials a:hover { color:var(--accent); }
+
+  @media(max-width:1100px) { .tools-grid { grid-template-columns:repeat(3,1fr); } }
+  @media(max-width:900px) {
+    #tool-tiles, #blog-tiles { padding:64px 24px; }
+    .tiles-header { flex-direction:column; align-items:flex-start; }
+    .tiles-sub { text-align:left; }
+    .tools-grid { grid-template-columns:1fr 1fr; }
+    .blog-grid { grid-template-columns:1fr; }
+    .footer-nav { padding:48px 24px 32px; }
+    .footer-nav-grid { grid-template-columns:1fr 1fr; }
+    .footer-brand { grid-column:1/-1; }
+  }
+  @media(max-width:600px) {
+    .tools-grid { grid-template-columns:1fr; }
+    .footer-nav-grid { grid-template-columns:1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div id="cursor"></div>
+<div id="cursor-ring"></div>
+<div class="grid-bg"></div>
+
+<nav>
+  <a href="#" class="nav-logo"><img src="logo.png" alt="agilva" style="height:36px;width:auto;filter:brightness(0) invert(1);object-fit:contain;"/></a>
+  <ul class="nav-links">
+    <li><a href="#services">Services</a></li>
+    <li><a href="#work">Work</a></li>
+    <li><a href="atlassian.html">Atlassian</a></li>
+    <li><a href="github.html">GitHub</a></li>
+    <li><a href="servicenow.html">ServiceNow</a></li>
+    <li><a href="clickup.html">ClickUp</a></li>
+    <li><a href="asana.html">Asana</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <button class="nav-cta" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Get in touch</button>
+</nav>
+
+<section id="hero">
+  <div class="hero-number">A</div>
+  <p class="hero-eyebrow">Strategy · Design · Consulting</p>
+  <h1 class="hero-title">
+    We shape<br>
+    <em>ideas</em> into<br>
+    impact.
+  </h1>
+  <p class="hero-sub">agilva is a boutique consultancy helping ambitious teams move faster, think sharper, and build work that endures.</p>
+  <div class="hero-scroll">
+    <div class="hero-scroll-line"></div>
+    <span>scroll</span>
+  </div>
+</section>
+
+<section id="tool-tiles">
+  <div class="tiles-header reveal">
+    <div>
+      <div class="tiles-label">Our practices</div>
+      <h2 class="tiles-eyebrow">Tools we <em>master</em></h2>
+    </div>
+    <p class="tiles-sub">Click any practice to explore our services, approach, and how we deliver results.</p>
+  </div>
+  <div class="tools-grid">
+    
+    <a href="atlassian.html" class="tool-tile reveal" style="--tile-color:#0052CC;">
+      <div class="tile-top">
+        <div class="tile-icon" style="color:#0052CC;"><svg viewBox="0 0 32 32" fill="none"><path d="M14.5 2.5C14.5 2.5 6 13 6 19a10 10 0 0020 0c0-6-8.5-16.5-8.5-16.5a1.9 1.9 0 00-3 0z" fill="currentColor" opacity=".25"/><path d="M16 10c0 0-5 7-5 12a5 5 0 0010 0c0-5-5-12-5-12z" fill="currentColor"/></svg></div>
+        <div class="tile-arrow">&#x2197;</div>
+      </div>
+      <div class="tile-name">Atlassian</div>
+      <p class="tile-desc">Jira, Confluence, Bitbucket — configured for the way your teams actually work.</p>
+      <div class="tile-tags"><span class="tile-tag">Jira</span><span class="tile-tag">Confluence</span><span class="tile-tag">Cloud Migration</span><span class="tile-tag">Automation</span></div>
+    </a>
+    <a href="github.html" class="tool-tile reveal" style="--tile-color:#6e40c9;">
+      <div class="tile-top">
+        <div class="tile-icon" style="color:#6e40c9;"><svg viewBox="0 0 32 32" fill="currentColor"><path d="M16 2a14 14 0 00-4.43 27.28c.7.13.96-.3.96-.67v-2.34c-3.9.85-4.72-1.88-4.72-1.88a3.71 3.71 0 00-1.56-2.05c-1.27-.87.1-.85.1-.85a2.94 2.94 0 012.14 1.44 2.98 2.98 0 004.08 1.16 3 3 0 01.89-1.87c-3.1-.36-6.37-1.56-6.37-6.93a5.42 5.42 0 011.44-3.76 5.04 5.04 0 01.14-3.71s1.17-.37 3.85 1.43a13.27 13.27 0 017 0c2.67-1.8 3.84-1.43 3.84-1.43a5.04 5.04 0 01.14 3.71 5.42 5.42 0 011.44 3.76c0 5.38-3.28 6.57-6.4 6.91a3.36 3.36 0 01.96 2.6v3.86c0 .37.25.8.97.67A14 14 0 0016 2z"/></svg></div>
+        <div class="tile-arrow">&#x2197;</div>
+      </div>
+      <div class="tile-name">GitHub</div>
+      <p class="tile-desc">CI/CD pipelines, GitHub Enterprise, Copilot, and security at scale.</p>
+      <div class="tile-tags"><span class="tile-tag">Actions</span><span class="tile-tag">Enterprise</span><span class="tile-tag">Copilot</span><span class="tile-tag">GHAS</span></div>
+    </a>
+    <a href="servicenow.html" class="tool-tile reveal" style="--tile-color:#62d84e;">
+      <div class="tile-top">
+        <div class="tile-icon" style="color:#62d84e;"><svg viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="13" stroke="currentColor" stroke-width="2.5"/><circle cx="16" cy="16" r="5" fill="currentColor"/><line x1="16" y1="3" x2="16" y2="9" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><line x1="16" y1="23" x2="16" y2="29" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><line x1="3" y1="16" x2="9" y2="16" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><line x1="23" y1="16" x2="29" y2="16" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg></div>
+        <div class="tile-arrow">&#x2197;</div>
+      </div>
+      <div class="tile-name">ServiceNow</div>
+      <p class="tile-desc">ITSM, ITOM, CSM — the operational backbone your enterprise deserves.</p>
+      <div class="tile-tags"><span class="tile-tag">ITSM</span><span class="tile-tag">ITOM</span><span class="tile-tag">CMDB</span><span class="tile-tag">Integration Hub</span></div>
+    </a>
+    <a href="clickup.html" class="tool-tile reveal" style="--tile-color:#7b68ee;">
+      <div class="tile-top">
+        <div class="tile-icon" style="color:#7b68ee;"><svg viewBox="0 0 32 32" fill="none"><polyline points="5,20 11,14 16,19 27,8" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/><polyline points="5,27 11,21 16,26 27,15" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" opacity=".4"/></svg></div>
+        <div class="tile-arrow">&#x2197;</div>
+      </div>
+      <div class="tile-name">ClickUp</div>
+      <p class="tile-desc">Workspace architecture, automations, and dashboards that scale with you.</p>
+      <div class="tile-tags"><span class="tile-tag">Workspace Design</span><span class="tile-tag">Automations</span><span class="tile-tag">Dashboards</span><span class="tile-tag">Migration</span></div>
+    </a>
+    <a href="asana.html" class="tool-tile reveal" style="--tile-color:#f06a6a;">
+      <div class="tile-top">
+        <div class="tile-icon" style="color:#f06a6a;"><svg viewBox="0 0 32 32" fill="currentColor"><circle cx="16" cy="10" r="5.5"/><circle cx="7" cy="22" r="4.5" opacity=".7"/><circle cx="25" cy="22" r="4.5" opacity=".7"/></svg></div>
+        <div class="tile-arrow">&#x2197;</div>
+      </div>
+      <div class="tile-name">Asana</div>
+      <p class="tile-desc">Goals, portfolios, and workflows that connect strategy to daily execution.</p>
+      <div class="tile-tags"><span class="tile-tag">OKRs & Goals</span><span class="tile-tag">Portfolios</span><span class="tile-tag">Reporting</span><span class="tile-tag">Change Mgmt</span></div>
+    </a>
+  </div>
+</section>
+
+<section id="blog-tiles">
+  <div class="tiles-header reveal">
+    <div>
+      <div class="tiles-label">Insights</div>
+      <h2 class="tiles-eyebrow">From the <em>blog</em></h2>
+    </div>
+    <p class="tiles-sub">Practical thinking on tools, process, and the craft of consulting.</p>
+  </div>
+  <div class="blog-grid">
+    
+    <div class="blog-tile reveal">
+      <div class="blog-tile-top">
+        <span class="blog-tag" style="color:#0052CC;border-color:#0052CC44;">Atlassian</span>
+        <span class="blog-meta">Mar 2025 &middot; 6 min read</span>
+      </div>
+      <h3 class="blog-title">Jira at Scale: Governance Without the Gridlock</h3>
+      <p class="blog-desc">How to build permission schemes and project templates that work across 500+ users without turning your admins into bottlenecks.</p>
+      <div class="blog-read">Read article <span>&#x2192;</span></div>
+    </div>
+    <div class="blog-tile reveal reveal-d1">
+      <div class="blog-tile-top">
+        <span class="blog-tag" style="color:#6e40c9;border-color:#6e40c944;">GitHub</span>
+        <span class="blog-meta">Feb 2025 &middot; 8 min read</span>
+      </div>
+      <h3 class="blog-title">The GitHub Actions Patterns We Use on Every Engagement</h3>
+      <p class="blog-desc">Reusable workflows, matrix builds, and caching strategies that cut pipeline time by 40% without heroics.</p>
+      <div class="blog-read">Read article <span>&#x2192;</span></div>
+    </div>
+    <div class="blog-tile reveal reveal-d2">
+      <div class="blog-tile-top">
+        <span class="blog-tag" style="color:#62d84e;border-color:#62d84e44;">ServiceNow</span>
+        <span class="blog-meta">Jan 2025 &middot; 7 min read</span>
+      </div>
+      <h3 class="blog-title">CMDB Done Right: Why Most Implementations Fail</h3>
+      <p class="blog-desc">Discovery is not a CMDB strategy. How we approach data quality, CI relationships, and reconciliation from day one.</p>
+      <div class="blog-read">Read article <span>&#x2192;</span></div>
+    </div>
+    <div class="blog-tile reveal reveal-d1">
+      <div class="blog-tile-top">
+        <span class="blog-tag" style="color:#7b68ee;border-color:#7b68ee44;">ClickUp</span>
+        <span class="blog-meta">Dec 2024 &middot; 5 min read</span>
+      </div>
+      <h3 class="blog-title">Designing ClickUp for Cross-Functional Teams</h3>
+      <p class="blog-desc">The hierarchy decisions, naming conventions, and automation rules that prevent workspace sprawl as your org grows.</p>
+      <div class="blog-read">Read article <span>&#x2192;</span></div>
+    </div>
+    <div class="blog-tile reveal reveal-d2">
+      <div class="blog-tile-top">
+        <span class="blog-tag" style="color:#f06a6a;border-color:#f06a6a44;">Asana</span>
+        <span class="blog-meta">Nov 2024 &middot; 6 min read</span>
+      </div>
+      <h3 class="blog-title">From OKRs to Tasks: Making Asana Goals Actually Land</h3>
+      <p class="blog-desc">Most teams set goals in Asana and never look at them again. How to connect them to the work people do every day.</p>
+      <div class="blog-read">Read article <span>&#x2192;</span></div>
+    </div>
+    <div class="blog-tile reveal reveal-d3">
+      <div class="blog-tile-top">
+        <span class="blog-tag" style="color:#c8a96e;border-color:#c8a96e44;">Strategy</span>
+        <span class="blog-meta">Oct 2024 &middot; 4 min read</span>
+      </div>
+      <h3 class="blog-title">Why Tool Selection Is the Last Decision You Should Make</h3>
+      <p class="blog-desc">Before you choose a platform, map your processes. The tool should fit the work, not the other way around.</p>
+      <div class="blog-read">Read article <span>&#x2192;</span></div>
+    </div>
+  </div>
+</section>
+
+<div class="footer-nav">
+  <div class="footer-nav-grid">
+    <div class="footer-brand">
+      <img src="logo.png" alt="agilva"/>
+      <p>A boutique consultancy helping ambitious teams define direction and execute with precision. Based in Cuttack &mdash; working globally.</p>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-title">Practices</div>
+      <ul>
+        <li><a href="atlassian.html">Atlassian</a></li>
+        <li><a href="github.html">GitHub</a></li>
+        <li><a href="servicenow.html">ServiceNow</a></li>
+        <li><a href="clickup.html">ClickUp</a></li>
+        <li><a href="asana.html">Asana</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-title">Company</div>
+      <ul>
+        <li><a href="#about">About us</a></li>
+        <li><a href="#work">Our work</a></li>
+        <li><a href="#blog-tiles">Blog</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-title">Connect</div>
+      <ul>
+        <li><a href="#">LinkedIn</a></li>
+        <li><a href="#">Twitter / X</a></li>
+        <li><a href="#">Dribbble</a></li>
+        <li><a href="/cdn-cgi/l/email-protection#254d4049494a6544424c4953440b464a"><span class="__cf_email__" data-cfemail="a5cdc0c9c9cae5c4c2ccc9d3c48bc6ca">[email&#160;protected]</span></a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span class="footer-copy">&copy; 2025 Agilva. All rights reserved.</span>
+    <div class="footer-socials">
+      <a href="#">LinkedIn</a>
+      <a href="#">Twitter</a>
+      <a href="#">Dribbble</a>
+    </div>
+  </div>
+</div>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+  // Cursor
+  const cursor = document.getElementById('cursor');
+  const ring = document.getElementById('cursor-ring');
+  let mx = 0, my = 0, rx = 0, ry = 0;
+  document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+  function animateCursor() {
+    cursor.style.left = mx + 'px'; cursor.style.top = my + 'px';
+    rx += (mx - rx) * 0.12; ry += (my - ry) * 0.12;
+    ring.style.left = rx + 'px'; ring.style.top = ry + 'px';
+    requestAnimationFrame(animateCursor);
+  }
+  animateCursor();
+
+  // Cursor grow on hover
+  document.querySelectorAll('a, button').forEach(el => {
+    el.addEventListener('mouseenter', () => {
+      cursor.style.width = '4px'; cursor.style.height = '4px';
+      ring.style.width = '44px'; ring.style.height = '44px';
+    });
+    el.addEventListener('mouseleave', () => {
+      cursor.style.width = '8px'; cursor.style.height = '8px';
+      ring.style.width = '32px'; ring.style.height = '32px';
+    });
+  });
+
+  // Scroll reveal — makes .reveal elements visible when they enter the viewport
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.08 });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  // Nav scroll style
+  const nav = document.getElementById('nav') || document.querySelector('nav');
+  if (nav) {
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 60);
+    });
+  }
+</script>
+</body>
+</html>
