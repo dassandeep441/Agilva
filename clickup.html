@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Agilva — ClickUp</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet"/>
+<style>
+
+  :root{
+    --bg:#0a0a09;--bg2:#111110;--bg3:#1a1a18;
+    --line:rgba(255,255,255,0.08);
+    --text:#e8e6df;--muted:#7a7870;
+    --accent:#c8b97a;
+    --serif:'Cormorant Garamond',Georgia,serif;
+    --mono:'DM Mono',monospace;
+  }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--text);font-family:var(--mono);font-size:13px;font-weight:300;line-height:1.7;cursor:none;overflow-x:hidden}
+  #cursor{position:fixed;width:8px;height:8px;background:var(--accent);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:width .2s,height .2s;mix-blend-mode:difference}
+  #cursor-ring{position:fixed;width:32px;height:32px;border:0.5px solid var(--accent);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);opacity:.5;transition:width .25s,height .25s}
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:24px 48px;border-bottom:0.5px solid transparent;transition:border-color .4s,background .4s}
+  nav.scrolled{border-color:var(--line);background:rgba(10,10,9,0.9);backdrop-filter:blur(12px)}
+  .nav-logo{text-decoration:none;display:flex;align-items:center}
+  .nav-logo img{height:34px;width:auto;filter:brightness(0) invert(1);object-fit:contain}
+  .nav-links{display:flex;gap:32px;list-style:none;align-items:center}
+  .nav-links a{color:var(--muted);font-size:11px;text-decoration:none;letter-spacing:.15em;text-transform:uppercase;transition:color .2s}
+  .nav-links a:hover{color:var(--text)}
+  .nav-back{color:var(--accent)!important;border:0.5px solid var(--line);padding:8px 16px;transition:border-color .2s!important}
+  .nav-back:hover{border-color:var(--accent)!important}
+  .divider{height:0.5px;background:var(--line);margin:0 48px}
+  section{padding:100px 48px}
+  .section-label{font-size:10px;letter-spacing:.25em;text-transform:uppercase;color:var(--accent);margin-bottom:16px;display:flex;align-items:center;gap:10px}
+  .section-label::before{content:'';display:inline-block;width:20px;height:0.5px;background:var(--accent)}
+  footer{padding:32px 48px;border-top:0.5px solid var(--line);display:flex;justify-content:space-between;align-items:center;font-size:11px;color:var(--muted);letter-spacing:.1em;flex-wrap:wrap;gap:16px}
+  .footer-links{display:flex;gap:24px}
+  .footer-links a{color:var(--muted);text-decoration:none;transition:color .2s}
+  .footer-links a:hover{color:var(--text)}
+  .reveal{opacity:0;transform:translateY(20px);transition:opacity .8s ease,transform .8s ease}
+  .reveal.visible{opacity:1;transform:none}
+  .reveal-delay-1{transition-delay:.1s}.reveal-delay-2{transition-delay:.2s}.reveal-delay-3{transition-delay:.3s}.reveal-delay-4{transition-delay:.4s}
+  @media(max-width:900px){nav{padding:16px 24px}.nav-links{display:none}section{padding-left:24px;padding-right:24px}.divider{margin:0 24px}body{cursor:auto}#cursor,#cursor-ring{display:none}footer{flex-direction:column;text-align:center}}
+
+  :root { --tool-color:#7B68EE; }
+
+  /* Hero */
+  #hero{min-height:100vh;display:flex;flex-direction:column;justify-content:flex-end;padding:0 48px 72px;position:relative;overflow:hidden}
+  .hero-grid{position:absolute;inset:0;pointer-events:none;background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);background-size:80px 80px;mask-image:radial-gradient(ellipse 80% 80% at 50% 50%,black 40%,transparent 100%);opacity:.5}
+  .hero-glow{position:absolute;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,#7B68EE18 0%,transparent 70%);top:50%;left:50%;transform:translate(-50%,-60%);pointer-events:none}
+  .hero-badge{display:inline-flex;align-items:center;gap:10px;border:0.5px solid #7B68EE44;padding:8px 18px;font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:#7B68EE;margin-bottom:32px;opacity:0;animation:fadeUp .7s .2s forwards}
+  .hero-badge::before{content:'';width:6px;height:6px;border-radius:50%;background:#7B68EE}
+  .hero-title{font-family:var(--serif);font-size:clamp(52px,8vw,110px);font-weight:300;line-height:.95;letter-spacing:-.02em;max-width:860px;opacity:0;animation:fadeUp .9s .4s forwards}
+  .hero-title em{font-style:italic;color:#7B68EE}
+  .hero-bottom{display:flex;align-items:flex-end;justify-content:space-between;margin-top:56px;opacity:0;animation:fadeUp .8s .7s forwards;flex-wrap:wrap;gap:24px}
+  .hero-desc{max-width:340px;color:var(--muted);font-size:12px;line-height:1.8}
+  .hero-cta{display:flex;align-items:center;gap:12px;color:var(--text);text-decoration:none;font-size:11px;letter-spacing:.15em;text-transform:uppercase;border:0.5px solid var(--line);padding:14px 28px;transition:border-color .3s,color .3s}
+  .hero-cta:hover{border-color:#7B68EE;color:#7B68EE}
+  .hero-cta::after{content:'↗';font-size:14px}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
+
+  /* Services */
+  #services{background:var(--bg2)}
+  .services-title{font-family:var(--serif);font-size:clamp(32px,5vw,58px);font-weight:300;line-height:1.1;margin-bottom:64px}
+  .services-title em{font-style:italic;color:#7B68EE}
+  .srv-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0}
+  .srv-item{border-top:0.5px solid var(--line);border-right:0.5px solid var(--line);padding:36px 28px;position:relative;overflow:hidden;transition:background .3s}
+  .srv-item:nth-child(3n){border-right:none}
+  .srv-item:nth-child(n+4){border-top:0.5px solid var(--line)}
+  .srv-item::after{content:'';position:absolute;bottom:0;left:0;width:100%;height:1.5px;background:linear-gradient(90deg,#7B68EE,transparent);transform:scaleX(0);transform-origin:left;transition:transform .4s}
+  .srv-item:hover{background:var(--bg3)}
+  .srv-item:hover::after{transform:scaleX(1)}
+  .srv-num{font-size:10px;letter-spacing:.2em;color:var(--muted);margin-bottom:20px}
+  .srv-icon{font-size:22px;margin-bottom:16px;filter:grayscale(0.3)}
+  .srv-name{font-family:var(--serif);font-size:22px;font-weight:300;margin-bottom:12px}
+  .srv-desc{font-size:12px;color:var(--muted);line-height:1.8}
+
+  /* Features */
+  #features{background:var(--bg)}
+  .feat-header{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:64px;flex-wrap:wrap;gap:24px}
+  .feat-title-main{font-family:var(--serif);font-size:clamp(32px,5vw,58px);font-weight:300;line-height:1.1}
+  .feat-title-main em{font-style:italic;color:#7B68EE}
+  .feat-sub{max-width:280px;color:var(--muted);font-size:12px;line-height:1.8}
+  .feat-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--line)}
+  .feat-card{background:var(--bg);padding:40px 36px;transition:background .3s}
+  .feat-card:hover{background:var(--bg2)}
+  .feat-title{font-family:var(--serif);font-size:20px;font-weight:300;margin-bottom:12px;color:var(--text)}
+  .feat-desc{font-size:12px;color:var(--muted);line-height:1.8}
+
+  /* Why Agilva */
+  #why{background:var(--bg2)}
+  .why-layout{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start}
+  .why-left{}
+  .why-title{font-family:var(--serif);font-size:clamp(32px,4vw,52px);font-weight:300;line-height:1.15;margin-bottom:24px}
+  .why-title em{font-style:italic;color:#7B68EE}
+  .why-body{color:var(--muted);font-size:12px;line-height:1.9;margin-bottom:32px}
+  .why-cta{display:inline-flex;align-items:center;gap:10px;color:#7B68EE;font-size:11px;letter-spacing:.15em;text-transform:uppercase;text-decoration:none;border-bottom:0.5px solid #7B68EE44;padding-bottom:4px;transition:border-color .2s}
+  .why-cta:hover{border-color:#7B68EE}
+  .why-items{display:flex;flex-direction:column;gap:0}
+  .why-item{display:flex;align-items:flex-start;gap:14px;padding:16px 0;border-bottom:0.5px solid var(--line);font-size:12px;color:var(--muted);line-height:1.6}
+  .why-check{color:#7B68EE;flex-shrink:0;margin-top:2px;font-size:10px}
+
+  /* CTA */
+  #cta{background:var(--bg);text-align:center;display:flex;flex-direction:column;align-items:center;padding:100px 48px}
+  .cta-pre{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:#7B68EE;margin-bottom:20px}
+  .cta-title{font-family:var(--serif);font-size:clamp(40px,6vw,80px);font-weight:300;line-height:1;margin-bottom:40px}
+  .cta-title em{font-style:italic;color:#7B68EE}
+  .cta-btn{display:inline-flex;align-items:center;gap:12px;color:var(--bg);background:#7B68EE;font-size:11px;letter-spacing:.15em;text-transform:uppercase;text-decoration:none;padding:16px 36px;transition:opacity .2s}
+  .cta-btn:hover{opacity:.85}
+
+  @media(max-width:900px){
+    .srv-grid{grid-template-columns:1fr}
+    .srv-item{border-right:none}
+    .feat-grid{grid-template-columns:1fr}
+    .why-layout{grid-template-columns:1fr}
+    #hero{padding-left:24px;padding-right:24px;padding-bottom:48px}
+  }
+</style>
+</head>
+<body>
+<div id="cursor"></div>
+<div id="cursor-ring"></div>
+
+<nav id="nav">
+  <a href="index.html" class="nav-logo"><img src="logo.png" alt="agilva" style="height:44px;width:auto;object-fit:contain;"/></a>
+  <ul class="nav-links">
+    <li><a href="atlassian.html" >Atlassian</a></li>
+<li><a href="github.html" >GitHub</a></li>
+<li><a href="servicenow.html" >ServiceNow</a></li>
+<li><a href="clickup.html" style="color:var(--accent)">ClickUp</a></li>
+<li><a href="asana.html" >Asana</a></li>
+    <li><a href="index.html" class="nav-back">← Home</a></li>
+  </ul>
+</nav>
+
+<section id="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-badge">ClickUp Practice</div>
+  <h1 class="hero-title">One platform,<br><em>zero chaos.</em></h1>
+  <div class="hero-bottom">
+    <p class="hero-desc">We configure ClickUp to become the operational backbone of your business — from project delivery and OKRs to client work and team collaboration.</p>
+    <a href="#services" class="hero-cta">Explore services</a>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<section id="services">
+  <div class="section-label reveal">What we offer</div>
+  <h2 class="services-title reveal">Our <em>ClickUp</em> services</h2>
+  <div class="srv-grid">
+        <div class="srv-item reveal">
+          <div class="srv-num">01</div>
+          <div class="srv-icon">🏛️</div>
+          <div class="srv-name">Workspace Architecture</div>
+          <p class="srv-desc">Spaces, Folders, Lists, and views designed around how your teams actually work — with clear ownership and no structural debt.</p>
+        </div>
+        <div class="srv-item reveal">
+          <div class="srv-num">02</div>
+          <div class="srv-icon">📅</div>
+          <div class="srv-name">Project & Portfolio Setup</div>
+          <p class="srv-desc">Templates, task structures, dependencies, and milestone tracking for repeatable delivery across every project type.</p>
+        </div>
+        <div class="srv-item reveal">
+          <div class="srv-num">03</div>
+          <div class="srv-icon">🤖</div>
+          <div class="srv-name">Automations & Integrations</div>
+          <p class="srv-desc">ClickUp Automations, Zapier, Make, and native integrations that reduce manual updates and keep your workspace current.</p>
+        </div>
+        <div class="srv-item reveal">
+          <div class="srv-num">04</div>
+          <div class="srv-icon">🎯</div>
+          <div class="srv-name">OKR & Goals Framework</div>
+          <p class="srv-desc">Configuring ClickUp Goals to track company OKRs with real progress — connected to the actual work being done.</p>
+        </div>
+        <div class="srv-item reveal">
+          <div class="srv-num">05</div>
+          <div class="srv-icon">📈</div>
+          <div class="srv-name">Dashboards & Reporting</div>
+          <p class="srv-desc">Custom Dashboards with the right widgets for leadership, ops, and delivery teams — so everyone sees what they need.</p>
+        </div>
+        <div class="srv-item reveal">
+          <div class="srv-num">06</div>
+          <div class="srv-icon">🎓</div>
+          <div class="srv-name">Team Training & SOPs</div>
+          <p class="srv-desc">Building Standard Operating Procedures and running hands-on training so your team gets value from day one.</p>
+        </div></div>
+</section>
+
+<div class="divider"></div>
+
+<section id="features">
+  <div class="feat-header">
+    <div>
+      <div class="section-label reveal">Capabilities</div>
+      <h2 class="feat-title-main reveal">Built for <em>real</em> teams</h2>
+    </div>
+    <p class="feat-sub reveal reveal-delay-2">ClickUp can do almost anything — which means it can also become a mess. We make it powerful without making it complicated.</p>
+  </div>
+  <div class="feat-grid">
+        <div class="feat-card reveal">
+          <div class="feat-title">Built for your workflow</div>
+          <p class="feat-desc">We don't use cookie-cutter templates. Every Space, List, and Custom Field is designed around your specific delivery model.</p>
+        </div>
+        <div class="feat-card reveal">
+          <div class="feat-title">Scalable across departments</div>
+          <p class="feat-desc">Whether it's engineering, marketing, operations, or client services — we configure ClickUp to work for every team.</p>
+        </div>
+        <div class="feat-card reveal">
+          <div class="feat-title">Migration from any tool</div>
+          <p class="feat-desc">Moving from Asana, Monday, Notion, or Trello? We migrate your data, templates, and processes with minimal disruption.</p>
+        </div>
+        <div class="feat-card reveal">
+          <div class="feat-title">Ongoing optimisation</div>
+          <p class="feat-desc">As your business evolves, your ClickUp workspace should too. We provide ongoing refinement and admin support.</p>
+        </div></div>
+</section>
+
+<div class="divider"></div>
+
+<section id="why">
+  <div class="why-layout">
+    <div class="why-left">
+      <div class="section-label reveal">Why Agilva</div>
+      <h2 class="why-title reveal">The <em>difference</em><br>we bring</h2>
+      <p class="why-body reveal">Most ClickUp workspaces are abandoned within three months because they weren't built with adoption in mind. We design for the people using it, not just the manager who requested it.</p>
+      <a href="index.html#contact" class="why-cta reveal">Start a conversation →</a>
+    </div>
+    <div class="why-items"><div class="why-item reveal reveal-delay-1"><span class="why-check">✦</span>ClickUp Verified implementation partner</div><div class="why-item reveal reveal-delay-2"><span class="why-check">✦</span>Cross-departmental workspace design</div><div class="why-item reveal reveal-delay-3"><span class="why-check">✦</span>OKR and portfolio management frameworks</div><div class="why-item reveal reveal-delay-4"><span class="why-check">✦</span>Automation and integration specialists</div><div class="why-item reveal "><span class="why-check">✦</span>Data migration from any project tool</div><div class="why-item reveal "><span class="why-check">✦</span>Training, SOPs, and change management</div></div>
+  </div>
+</section>
+
+<section id="cta">
+  <div class="cta-pre reveal">Ready to get started?</div>
+  <h2 class="cta-title reveal reveal-delay-1">Let's build<br><em>together.</em></h2>
+  <a href="index.html#contact" class="cta-btn reveal reveal-delay-2">Get in touch ↗</a>
+</section>
+
+
+<footer>
+  <img src="logo.png" alt="agilva" style="height:44px;width:auto;object-fit:contain;"/>
+  <span>© 2025 Agilva. All rights reserved.</span>
+  <div class="footer-links">
+    <a href="atlassian.html">Atlassian</a>
+    <a href="github.html">GitHub</a>
+    <a href="servicenow.html">ServiceNow</a>
+    <a href="clickup.html">ClickUp</a>
+    <a href="asana.html">Asana</a>
+  </div>
+</footer>
+
+<script>
+  const cursor=document.getElementById('cursor'),ring=document.getElementById('cursor-ring');
+  let mx=0,my=0,rx=0,ry=0;
+  document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cursor.style.left=mx+'px';cursor.style.top=my+'px'});
+  (function loop(){rx+=(mx-rx)*.12;ry+=(my-ry)*.12;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(loop)})();
+  document.querySelectorAll('a,button').forEach(el=>{
+    el.addEventListener('mouseenter',()=>{cursor.style.width='4px';cursor.style.height='4px';ring.style.width='48px';ring.style.height='48px'});
+    el.addEventListener('mouseleave',()=>{cursor.style.width='8px';cursor.style.height='8px';ring.style.width='32px';ring.style.height='32px'});
+  });
+  const nav=document.getElementById('nav');
+  window.addEventListener('scroll',()=>nav.classList.toggle('scrolled',window.scrollY>60));
+  const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target)}})},{threshold:.12});
+  document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+</script>
+</body>
+</html>
