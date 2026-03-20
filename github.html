@@ -351,5 +351,57 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:cen
   </div>
 </div>
 
+  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+  const cursor=document.getElementById('cursor'),ring=document.getElementById('cursor-ring');
+  let mx=0,my=0,rx=0,ry=0;
+  document.addEventListener('mousemove',function(e){mx=e.clientX;my=e.clientY;cursor.style.left=mx+'px';cursor.style.top=my+'px';});
+  (function loop(){rx+=(mx-rx)*.12;ry+=(my-ry)*.12;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(loop);})();
+  document.querySelectorAll('a,button').forEach(function(el){
+    el.addEventListener('mouseenter',function(){cursor.style.width='4px';cursor.style.height='4px';ring.style.width='48px';ring.style.height='48px';});
+    el.addEventListener('mouseleave',function(){cursor.style.width='7px';cursor.style.height='7px';ring.style.width='34px';ring.style.height='34px';});
+  });
+  var obs=new IntersectionObserver(function(en){en.forEach(function(e){if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target);}});},{threshold:.08});
+  document.querySelectorAll('.reveal').forEach(function(el){obs.observe(el);});
+  function openPopup(){document.getElementById('contactPopup').classList.add('open');document.body.style.overflow='hidden';}
+  function closePopup(){document.getElementById('contactPopup').classList.remove('open');document.body.style.overflow='';}
+  function closePopupOnOverlay(e){if(e.target===document.getElementById('contactPopup'))closePopup();}
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')closePopup();});
+
+  // EmailJS — replace these with your values from emailjs.com
+  var EMAILJS_PUBLIC_KEY  = "YOUR_PUBLIC_KEY";
+  var EMAILJS_SERVICE_ID  = "YOUR_SERVICE_ID";
+  var EMAILJS_TEMPLATE_ID = "YOUR_TEMPLATE_ID";
+  (function(){ emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY }); })();
+
+  function sendForm(e) {
+    e.preventDefault();
+    var form = document.getElementById("popup-form");
+    var btn  = form.querySelector(".form-submit");
+    var resp = typeof grecaptcha !== "undefined" ? grecaptcha.getResponse() : "skip";
+    if (resp !== "skip" && resp.length === 0) {
+      alert("Please complete the reCAPTCHA verification.");
+      return;
+    }
+    btn.textContent = "Sending…";
+    btn.disabled = true;
+    emailjs.sendForm(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, form)
+      .then(function() {
+        btn.textContent = "Message Sent ✓";
+        btn.style.background = "#3a6a3a";
+        setTimeout(function(){
+          closePopup();
+          form.reset();
+          btn.textContent = "Send Message →";
+          btn.style.background = "";
+          btn.disabled = false;
+        }, 2500);
+      }, function(error) {
+        btn.textContent = "Send Message →";
+        btn.disabled = false;
+        alert("Something went wrong. Please email us at info@agilva.com\nError: " + JSON.stringify(error));
+      });
+  }
+</script>
+  
 </body>
 </html>
