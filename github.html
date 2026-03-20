@@ -27,10 +27,10 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:13
 /* Nav */
 nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:12px 56px;background:rgba(8,8,8,.94);backdrop-filter:blur(20px);border-bottom:0.5px solid var(--line);}
 .nav-logo{text-decoration:none;display:flex;align-items:center;}
-.nav-logo img{height:44px;width:auto;object-fit:contain;}
+.nav-logo img{height:44px;width:auto;object-fit:contain;transform:scale(2.2);transform-origin:left center;}
 .nav-links{display:flex;gap:4px;list-style:none;align-items:center;}
 .nav-links>li{position:relative;}
-.nav-links>li>a{color:var(--muted2);text-decoration:none;font-size:11px;letter-spacing:.16em;text-transform:uppercase;transition:color .2s;font-family:var(--sans);font-weight:300;padding:8px 14px;display:flex;align-items:center;gap:5px;}
+.nav-links>li>a{color:var(--muted2);text-decoration:none;font-size:12.25px;letter-spacing:.16em;text-transform:uppercase;transition:color .2s;font-family:var(--sans);font-weight:300;padding:8px 14px;display:flex;align-items:center;gap:5px;}
 .nav-links>li>a:hover{color:var(--text);}
 .nav-links>li>a.active{color:var(--accent);}
 .has-drop>a::after{content:'';width:5px;height:5px;border-right:0.5px solid currentColor;border-bottom:0.5px solid currentColor;transform:rotate(45deg) translateY(-2px);display:inline-block;transition:transform .2s;}
@@ -55,7 +55,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:cen
 .hero-title{font-family:var(--serif);font-size:clamp(56px,8vw,110px);font-weight:300;line-height:.95;letter-spacing:-.02em;max-width:860px;opacity:0;animation:fadeUp .9s .25s forwards;}
 .hero-title em{font-style:italic;color:var(--tool);}
 .hero-bottom{display:flex;align-items:flex-end;justify-content:space-between;margin-top:56px;flex-wrap:wrap;gap:28px;opacity:0;animation:fadeUp .8s .5s forwards;}
-.hero-desc{max-width:400px;color:var(--muted2);font-size:14px;line-height:1.9;font-weight:300;}
+.hero-desc{max-width:400px;color:var(--muted2);font-size:15px;line-height:1.9;font-weight:300;}
 .hero-cta-wrap{display:flex;gap:14px;flex-wrap:wrap;}
 .btn-primary{display:inline-flex;align-items:center;gap:10px;background:var(--accent);color:var(--bg);padding:13px 30px;font-size:11px;letter-spacing:.16em;text-transform:uppercase;text-decoration:none;font-family:var(--sans);font-weight:400;border-radius:6px;transition:background .25s,transform .2s;border:none;cursor:pointer;}
 .btn-primary:hover{background:var(--accent2);transform:translateY(-2px);}
@@ -79,7 +79,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:cen
 .svc-tile:hover::before{opacity:1;}
 .svc-tile-num{font-size:10px;letter-spacing:.2em;color:var(--muted);margin-bottom:24px;font-family:var(--sans);}
 .svc-tile-name{font-family:var(--serif);font-size:24px;font-weight:300;margin-bottom:14px;line-height:1.1;}
-.svc-tile-desc{font-size:12px;color:var(--muted);line-height:1.85;flex:1;font-weight:300;}
+.svc-tile-desc{font-size:12.25px;color:var(--muted);line-height:1.85;flex:1;font-weight:250;}
 
 /* Steps */
 .steps-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:0;}
@@ -115,7 +115,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:cen
 /* Footer */
 .footer-nav{border-top:0.5px solid var(--line);background:var(--bg2);padding:72px 56px 44px;}
 .footer-nav-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:56px;margin-bottom:64px;}
-.footer-brand img{height:60px;width:auto;margin-bottom:22px;display:block;object-fit:contain;}
+.footer-brand img{height:44px;width:auto;object-fit:contain;transform:scale(2.4);transform-origin:left center;}
 .footer-brand p{font-size:13px;color:var(--muted);line-height:1.9;max-width:260px;font-weight:300;}
 .footer-col-title{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);margin-bottom:22px;font-family:var(--sans);font-weight:300;}
 .footer-col ul{list-style:none;display:flex;flex-direction:column;gap:12px;}
@@ -188,9 +188,9 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:cen
       <a href="index.html#services" class="active">Services</a>
       <div class="dropdown">
         <a href="atlassian.html"><span class="dropdown-dot"></span>Atlassian</a>
-        <a href="github.html" class="current"><span class="dropdown-dot"></span>GitHub</a>
-        <div class="dropdown-divider"></div>
         <a href="servicenow.html"><span class="dropdown-dot"></span>ServiceNow</a>
+        <div class="dropdown-divider"></div>
+        <a href="github.html"><span class="dropdown-dot"></span>GitHub</a>
         <a href="clickup.html"><span class="dropdown-dot"></span>ClickUp</a>
         <a href="asana.html"><span class="dropdown-dot"></span>Asana</a>
       </div>
@@ -313,12 +313,12 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:cen
     </div>
     <div class="footer-col">
       <div class="footer-col-title">Connect</div>
-      <ul><li><a href="#">LinkedIn</a></li><li><a href="#">Twitter / X</a></li><li><a href="#">Dribbble</a></li><li><a href="/cdn-cgi/l/email-protection#e881868e87a8898f81849e89c68b8785"><span class="__cf_email__" data-cfemail="e68f888089a687818f8a9087c885898b">[email&#160;protected]</span></a></li></ul>
+      <ul><li><a href="#">LinkedIn</a></li><li><a href="#">Twitter / X</a></li></ul>
     </div>
   </div>
   <div class="footer-bottom">
     <span class="footer-copy">&copy; 2025 Agilva. All rights reserved.</span>
-    <div class="footer-socials"><a href="#">LinkedIn</a><a href="#">Twitter</a><a href="#">Dribbble</a></div>
+    <div class="footer-socials"><a href="#">LinkedIn</a><a href="#">Twitter</a><a href="#">Upwork</a></div>
   </div>
 </div>
 
@@ -344,7 +344,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:cen
         </select>
       </div>
       <div class="form-row"><label class="form-label">Message</label><textarea class="form-textarea" name="message" placeholder="Tell us about your project or challenge..." required></textarea></div>
-      <div class="captcha-wrap"><div class="g-recaptcha" data-sitekey="YOUR_SITE_KEY" data-theme="dark"></div></div>
+      <div class="captcha-wrap"><div class="g-recaptcha" data-sitekey="6LfRB5AsAAAAANxQWNRTov7wNTR0nG_RvYS_oUaP" data-theme="dark"></div></div>
       <button type="submit" class="form-submit">Send Message &rarr;</button>
       <p class="form-note">We respect your privacy. Your information is never shared with third parties.</p>
     </form>
